@@ -3,12 +3,14 @@ var seatgeek_client_id = 'YOUR_CLIENT_ID_HERE';
 // List of event objects with id and max_price you are willing to pay
 var events = [
   {
-    id: 4077297,  // Sam Smith in San Diego
-    max_price: 70
+    name: 'Sam Smith in San Diego',
+    id: 4077297,
+    maxPrice: 70
   },
   {
-    id: 4190575,  // Charlie Puth in San Diego
-    max_price: 20
+    name: 'Charlie Puth in San Diego',
+    id: 4190575,
+    maxPrice: 20
   }
 ];
 
@@ -20,6 +22,11 @@ function checkPrices() {
     var response = UrlFetchApp.fetch(url);
     var json = response.getContentText();
     var data = JSON.parse(json);
-    Logger.log(data);
+
+    var lowestPrice = data.stats.lowest_price;
+    Logger.log('Lowest price for ' + event.name + ': $' + lowestPrice);
+    if (lowestPrice <= event.maxPrice) {
+      // Send an email to let you know!
+    }
   });
 }
