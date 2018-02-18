@@ -1,4 +1,5 @@
-var seatgeek_client_id = 'YOUR_CLIENT_ID_HERE';
+var seatgeekClientId = 'YOUR_CLIENT_ID_HERE';
+var emailToAlert = 'YOUR_EMAIL_HERE';
 
 // List of event objects with id and max_price you are willing to pay
 var events = [
@@ -18,15 +19,18 @@ function checkPrices() {
   events.forEach(function(event) {
     var url = 'https://api.seatgeek.com/2/events/'
       + event.id.toString()
-      + '?client_id=' + seatgeek_client_id;
+      + '?client_id=' + seatgeekClientId;
     var response = UrlFetchApp.fetch(url);
     var json = response.getContentText();
     var data = JSON.parse(json);
 
     var lowestPrice = data.stats.lowest_price;
-    Logger.log('Lowest price for ' + event.name + ': $' + lowestPrice);
+    var alertText = 'Lowest price for ' + event.name + ': $' + lowestPrice;
+    Logger.log(alertText);
     if (lowestPrice <= event.maxPrice) {
-      // Send an email to let you know!
+      MailApp.sendEmail(emailToAlert,
+                        'Google Apps Script SeatGeek Alert',
+                        alertText);
     }
   });
 }
