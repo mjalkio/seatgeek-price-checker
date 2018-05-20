@@ -24,6 +24,12 @@ function checkPrices() {
     var json = response.getContentText();
     var data = JSON.parse(json);
 
+    if(Date.now() > Date.parse(data.visible_until_utc)) {
+      // If you can no longer buy tickets, don't send any alerts...
+      Logger.log('Event ' + event.name + ' is in the past.');
+      return;
+    }
+
     var lowestPrice = data.stats.lowest_price;
     var alertText = 'Lowest price for ' + event.name + ': $' + lowestPrice;
     Logger.log(alertText);
