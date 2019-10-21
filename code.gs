@@ -24,14 +24,16 @@ function checkPrices() {
     var json = response.getContentText();
     var data = JSON.parse(json);
 
+    var eventDesc = data.title + ' (ID ' + event.id + ') at ' + data.venue.name + ' in ' + data.venue.city;
+
     if(Date.now() > Date.parse(data.visible_until_utc)) {
       // If you can no longer buy tickets, don't send any alerts...
-      Logger.log('Event ' + event.name + ' is in the past.');
+      Logger.log(eventDesc + ' is in the past.');
       return;
     }
 
     var lowestPrice = data.stats.lowest_price;
-    var alertText = 'Lowest price for ' + event.name + ': $' + lowestPrice;
+    var alertText = 'Lowest price for ' + eventDesc + ': $' + lowestPrice;
     Logger.log(alertText);
     if (lowestPrice <= event.maxPrice) {
       MailApp.sendEmail(emailToAlert,
