@@ -4,12 +4,10 @@ var emailToAlert = 'YOUR_EMAIL_HERE';
 // List of event objects with id and max_price you are willing to pay
 var events = [
   {
-    name: 'Sam Smith in San Diego',
     id: 4077297,
     maxPrice: 70
   },
   {
-    name: 'Charlie Puth in San Diego',
     id: 4190575,
     maxPrice: 20
   }
