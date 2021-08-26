@@ -33,7 +33,7 @@ function checkPrices() {
     var lowestPrice = data.stats.lowest_price;
     var alertText = 'Lowest price for ' + eventDesc + ': $' + lowestPrice;
     Logger.log(alertText);
-    if (lowestPrice <= event.maxPrice) {
+    if (lowestPrice <= event.maxPrice && lowestPrice !== null) {
       MailApp.sendEmail(emailToAlert,
                         'Google Apps Script SeatGeek Alert',
                         alertText);
